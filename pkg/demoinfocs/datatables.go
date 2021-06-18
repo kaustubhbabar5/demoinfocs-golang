@@ -109,7 +109,7 @@ func (p *parser) bindBomb() {
 func (p *parser) bindTeamStates() {
 	p.stParser.ServerClasses().FindByName("CCSTeam").OnEntityCreated(func(entity st.Entity) {
 		team := entity.PropertyValueMust("m_szTeamname").StringVal
-
+		
 		var s *common.TeamState
 
 		switch team {
@@ -170,21 +170,21 @@ func (p *parser) bindPlayers() {
 	})
 }
 
-func (p *parser) getOrCreatePlayer(entityID int, rp *playerInfo) (isNew bool, player *common.Player) {
+func (p *parser) getOrCreatePlayer(entityID int, rp *common.PlayerInfo) (isNew bool, player *common.Player) {
 	player = p.gameState.playersByEntityID[entityID]
 
 	if player == nil {
 		if rp != nil {
-			player = p.gameState.playersByUserID[rp.userID]
+			player = p.gameState.playersByUserID[rp.UserID]
 
 			if player == nil {
 				isNew = true
 
 				player = common.NewPlayer(p.demoInfoProvider)
-				player.Name = rp.name
-				player.SteamID64 = rp.xuid
-				player.IsBot = rp.isFakePlayer || rp.guid == "BOT"
-				player.UserID = rp.userID
+				player.Name = rp.Name
+				player.SteamID64 = rp.XUID
+				player.IsBot = rp.IsFakePlayer || rp.GUID == "BOT"
+				player.UserID = rp.UserID
 			}
 		} else {
 			// see #162.
@@ -200,7 +200,7 @@ func (p *parser) getOrCreatePlayer(entityID int, rp *playerInfo) (isNew bool, pl
 	p.gameState.playersByEntityID[entityID] = player
 
 	if rp != nil {
-		p.gameState.playersByUserID[rp.userID] = player
+		p.gameState.playersByUserID[rp.UserID] = player
 	}
 
 	return isNew, player

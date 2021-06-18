@@ -443,8 +443,8 @@ func assertGolden(tb testing.TB, assertions *assert.Assertions, testCase string,
 
 	const goldenVerificationGoVersionMin = "go1.12"
 	if ver := runtime.Version(); strings.Compare(ver, goldenVerificationGoVersionMin) < 0 {
-		tb.Logf("old go version %q detected, skipping golden file verification", ver)
-		tb.Logf("need at least version %q to compare against golden file", goldenVerificationGoVersionMin)
+		tb.Logf("old go Version %q detected, skipping golden file verification", ver)
+		tb.Logf("need at least Version %q to compare against golden file", goldenVerificationGoVersionMin)
 
 		return
 	}
